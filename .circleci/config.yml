@@ -1,20 +1,21 @@
 version: 2.1
 
+orbs:
+  git-shallow-clone: guitarrapc/git-shallow-clone@2.8.0
+
 jobs:
   build:
     docker:
       - image: cimg/base:2023.10
     steps:
-      # - checkout の代わりに自分で git clone する
-      - run: git clone --depth 1 --no-single-branch "$CIRCLE_REPOSITORY_URL"
+      - git-shallow-clone/checkout
       - run: echo "this is the build job"
       - run: cat README.md
   test:
     docker:
       - image: cimg/base:2023.10
     steps:
-      # - checkout の代わりに自分で git clone する
-      - run: git clone --depth 1 --no-single-branch "$CIRCLE_REPOSITORY_URL"
+      - git-shallow-clone/checkout
       - run: echo "this is the test job"
       - run: cat README.md
 
